@@ -2,34 +2,11 @@
 close all;
 clear all;
 
-classdef BasicClass
-   properties
-      Value {mustBeNumeric}
-   end
-R = 0.04;       %radius of wheel in m
-L = 0.1;        %distance from wheel axis to body center of mass in m
-mw = 0.02;      %mass of the wheel in kg
-mb =0.2;        %mass of the body in kg
-Iw = 0.00025;   %inertia of wheel
-Ib = 0.003;     %inertia of body 
-tsat = 10;      %max torque of the motor N.m
-gGravity = 9.81;       %gravite
 
-b = Ib + mb * L^2;
-c = Iw + (mw+mb) * R^2;
-bc = b * c;
-h = mb * R * L;
+P = Param;
+Sv = SV;
+U = 0;
 
-%-------------------------
-% Indexation des composantes du vecteur d'etat
-ix      = 1;  % horizontal pos of the wheel axis in m
-itheta  = 2;  % orientation of the body in rad, 0 up
-ixd     = 3;  % horizontal velocity of the wheel axis in m/s
-ithetad = 4; % rotational velocity of the body in rad/s
-TOTAL_SV   = 4;  % dimension of the state vector
-
-%-------------------------
-% Indexation des composantes du vecteur de commande
-
-it = 1; % torque on the wheel axis in N.m
-TOTAL_CMD = 1;  % dimension of the input vector
+time = [0:0.01:10];
+X = scipy.integrate.odeint(dyn, X0, time, args=(U, P ))
+U = np.zeros((len(time), 1))
