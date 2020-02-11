@@ -7,6 +7,11 @@ P = Param;
 Sv = SV;
 U = 0;
 
-time = [0:0.01:10];
-X = scipy.integrate.odeint(dyn, X0, time, args=(U, P ))
-U = np.zeros((len(time), 1))
+X0 = [0 0.01 0 0];
+time = [0 10];
+%ode45(@(t,y)Reactor_simple_ODE(t,y,a1,a2,a3),span,init,options);
+test = dyn(0,X0,U,P,Sv);
+[t,X] = ode45(@(t,X)dyn(t,X,U,P,Sv),time,X0);
+%U = zeros((length(time), 1));
+
+plot(X(:,Sv.ix),time);
