@@ -8,9 +8,6 @@ Sv = SV;
 U = 0;
 
 %Open Loop
-OpenLoop = courbe; 
-OpenLoop.Name = "Open Loop";
-
 X0 = [0; 0.01; 0; 0];
 tspan = 0:.01:10;
 opts = odeset();
@@ -27,8 +24,6 @@ ctrb(A, B)
 
 
 %pole
-Pole = courbe;
-Pole.Name = "Pôle";
 poles = [-2 -3 -4 -5];
 K = place(A, B, poles);
 eig(A-B*K);
@@ -37,8 +32,6 @@ Pole.U = -K*Pole.X';
 
 
 %lqr
-LQR = courbe;
-LQR.Name = "LQR"
 Q = diag([10, 1, 1, 1]);
 R = diag(2);
 [K_lqr,S,E] = lqr(A,B,Q,R);
