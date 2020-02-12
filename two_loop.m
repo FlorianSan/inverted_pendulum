@@ -1,6 +1,5 @@
-function Xd=two_loop(t,X,P,Sv)
-sp_x = 0.1;
-e_x= X(Sv.ix)-sp_x;
+function Xd=two_loop(t,X,target,P,Sv)
+e_x= X(Sv.ix)-target;
 e_xd = X(Sv.ixd);
 Kp = 2;
 Kd = 4;
