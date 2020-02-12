@@ -18,9 +18,9 @@ OpenLoop.U = zeros(length(tspan),1);
 %[t,X] = ode45(@(t,X)feedback(t,X,K,P,Sv),tspan,X0);
 
 
-[A, B] = num_jacobian([0 0 0 0], 0, P,Sv)
-eig(A)
-ctrb(A, B)
+[A, B] = num_jacobian([0 0 0 0], 0, P,Sv);
+eig(A);
+ctrb(A, B);
 
 
 %pole
@@ -35,7 +35,7 @@ Pole.U = -K*Pole.X';
 Q = diag([10, 1, 1, 1]);
 R = diag(2);
 [K_lqr,S,E] = lqr(A,B,Q,R);
-eig(A-B*K_lqr)
+eig(A-B*K_lqr);
 [LQR.t,LQR.X] = ode45(@(t,X)feedback(t,X,K_lqr,P,Sv),tspan,X0);
 LQR.U = -K*LQR.X';
 
