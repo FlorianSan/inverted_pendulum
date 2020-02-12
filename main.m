@@ -44,5 +44,4 @@ R = diag(2);
 [K_lqr,S,E] = lqr(A,B,Q,R);
 eig(A-B*K_lqr)
 [t,X] = ode45(@(t,X)feedback(t,X,K_lqr,P,Sv),tspan,X0);
-
-
+affichage(X,t,Sv);

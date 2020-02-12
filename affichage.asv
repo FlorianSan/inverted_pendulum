@@ -1,0 +1,16 @@
+function [] = affichage(X, t, Sv)
+figure
+plot(t,X(:,Sv.ix,'Color', 'b', 'LineWidth',2)
+hold on
+plot(t,X(:,Sv.ix,'Color', 'b', 'LineWidth',2)
+hold on
+set(gca,{'FontSize'},{18},{'xcolor'},{'k'})
+xline(3,'--',{'Exigence','à 3s'},'FontSize',18)
+yline(1.05,'--',{'Bandeau'},'FontSize',18)
+yline(1,'.')
+y_bas = yline(0.95,'--',{'des 5%'},'FontSize',18)
+y_bas.LabelVerticalAlignment = 'bottom'
+ylabel('Delta hp (FL)','FontSize',22)
+xlabel('Temps (s)','FontSize',22)
+legend('racine à -10','racine à -3','FontSize',18,'Location','southeast')
+end
