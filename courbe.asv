@@ -1,0 +1,7 @@
+classdef courbe
+     properties
+        X 
+        t
+        
+   end 
+end

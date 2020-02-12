@@ -8,12 +8,14 @@ Sv = SV;
 U = 0;
 
 %Open Loop
+OpenLoop = courbe; 
+OpenLoop.Name = "Open Loop";
+
 X0 = [0; 0.01; 0; 0];
 tspan = 0:.01:10;
 opts = odeset();
-[t,Xopen] = ode45(@(t,X)dyn(t,X,U,P,Sv),tspan,X0);
-U = zeros(length(t),1);
-affichage(Xopen,U,t,Sv);
+[OpenLoop.t,OpenLoop.X] = ode45(@(t,X)dyn(t,X,U,P,Sv),tspan,X0);
+OpenLoop.U = zeros(length(tspan),1);
 
 %feedback
 %[t,X] = ode45(@(t,X)feedback(t,X,K,P,Sv),tspan,X0);
@@ -25,18 +27,24 @@ ctrb(A, B)
 
 
 %pole
+Pole = courbe;
+Pole.Name = "Pôle";
 poles = [-2 -3 -4 -5];
-K = place(A, B, poles)
-eig(A-B*K)
-[t,Xpole] = ode45(@(t,X)feedback(t,X,K,P,Sv),tspan,X0);
-Upole = -K*Xpole';
+K = place(A, B, poles);
+eig(A-B*K);
+[Pole.t,Pole.X] = ode45(@(t,X)feedback(t,X,K,P,Sv),tspan,X0);
+Pole.U = -K*Pole.X';
 
 
 %lqr
+LQR = courbe;
+LQR.Name = "LQR"
 Q = diag([10, 1, 1, 1]);
 R = diag(2);
 [K_lqr,S,E] = lqr(A,B,Q,R);
 eig(A-B*K_lqr)
-[t,Xlqr] = ode45(@(t,X)feedback(t,X,K_lqr,P,Sv),tspan,X0);
-Ulqr = -K*Xlqr';
-affichage(Xlqr,Ulqr,t,Sv, Xpole, Upole);
+[LQR.t,LQR.X] = ode45(@(t,X)feedback(t,X,K_lqr,P,Sv),tspan,X0);
+LQR.U = -K*LQR.X';
+
+
+affichage(Sv, OpenLoop, Pole);
