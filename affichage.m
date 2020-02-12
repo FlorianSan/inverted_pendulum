@@ -69,11 +69,15 @@ plot(Courbe1.t,Courbe1.U,'Color', 'b', 'LineWidth',2)
 if nargin == 3
     hold on;
     plot(Courbe2.t,Courbe2.U,'Color', 'r', 'LineWidth',2)
+    legend({Courbe1.Name, Courbe2.Name})
 elseif nargin == 4
     hold on;
     plot(Courbe2.t,Courbe2.U,'Color', 'r', 'LineWidth',2)
     hold on;
     plot(Courbe3.t,Courbe3.U,'Color', 'g', 'LineWidth',2)
+    legend({Courbe1.Name, Courbe2.Name, Courbe3.Name})
+else
+    legend({Courbe1.Name})
 end
 set(gca,{'FontSize'},{18},{'xcolor'},{'k'})
 xlabel('Temps (s)','FontSize',20)
@@ -82,5 +86,4 @@ title("Commande")
 
 hold on
 set(gca,{'FontSize'},{18},{'xcolor'},{'k'})
-legend({Courbe1.Name, Courbe2.Name, Courbe3.Name})
 end
