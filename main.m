@@ -12,7 +12,7 @@ X0 = [0; 0.01; 0; 0];
 tspan = [0 10];
 [t,X] = ode45(@(t,X)dyn(t,X,U,P,Sv),tspan,X0);
 U = zeros(length(t),1);
-affichage(X,t,Sv);
+affichage(X,U,t,Sv);
 
 %feedback
 %[t,X] = ode45(@(t,X)feedback(t,X,K,P,Sv),tspan,X0);
@@ -38,4 +38,9 @@ R = diag(2);
 eig(A-B*K_lqr)
 [t,X] = ode45(@(t,X)feedback(t,X,K_lqr,P,Sv),tspan,X0);
 U = -K*X';
-affichage(X,t,Sv);
+affichage(X,U,t,Sv);
+
+%two loop
+[t,X] = ode45(@(t,X)two_loop(t,X,P,Sv),tspan,X0);
+U = -K*X';
+affichage(X,U,t,Sv);
