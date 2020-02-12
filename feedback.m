@@ -1,3 +1,4 @@
 function Xd=feedback(t,X,K,P,Sv)
-Xd = dyn(t,X,-K*X,P,Sv);
+U = -K*X;
+Xd = dyn(t,X,U,P,Sv);
 end

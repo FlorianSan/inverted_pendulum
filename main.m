@@ -37,6 +37,7 @@ K = place(A, B, poles)
 eig(A-B*K)
 [t,X] = ode45(@(t,X)feedback(t,X,K,P,Sv),tspan,X0);
 
+
 %lqr
 Q = diag([10, 1, 1, 1]);
 R = diag(2);
