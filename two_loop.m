@@ -1,4 +1,4 @@
-function Xd=two_loop(t,X,target,P,Sv)
+function [Xd,U]=two_loop(t,X,target,P,Sv)
 e_x= X(Sv.ix)-target;
 e_xd = X(Sv.ixd);
 Kp = 2;
