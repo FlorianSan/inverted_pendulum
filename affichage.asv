@@ -7,8 +7,6 @@ if nargin == 3
     plot(Courbe2.t,Courbe2.X(:,Sv.ix),'Color', 'r', 'LineWidth',2)
 elseif nargin == 4
     hold on;
-    plot(Courbe2.t,Courbe2.X(:,Sv.ix),'Color', 'r', 'LineWidth',2)
-    hold on;
     plot(Courbe3.t,Courbe3.X(:,Sv.ix),'Color', 'g', 'LineWidth',2) 
 end
 set(gca,{'FontSize'},{18},{'xcolor'},{'k'})
@@ -23,8 +21,6 @@ if nargin == 3
     plot(Courbe2.t,Courbe2.X(:,Sv.itheta),'Color', 'r', 'LineWidth',2)
 elseif nargin == 4
     hold on;
-    plot(Courbe2.t,Courbe2.X(:,Sv.itheta),'Color', 'r', 'LineWidth',2)
-    hold on;
     plot(Courbe3.t,Courbe3.X(:,Sv.itheta),'Color', 'g', 'LineWidth',2)
 end
 set(gca,{'FontSize'},{18},{'xcolor'},{'k'})
@@ -37,11 +33,7 @@ plot(Courbe1.t,Courbe1.X(:,Sv.ixd),'Color', 'b', 'LineWidth',2)
 if nargin == 3
     hold on;
     plot(Courbe2.t,Courbe2.X(:,Sv.ixd),'Color', 'r', 'LineWidth',2)
-elseif nargin == 4
-    hold on;
-    plot(Courbe2.t,Courbe2.X(:,Sv.ixd),'Color', 'r', 'LineWidth',2)
-    hold on;
-    plot(Courbe3.t,Courbe3.X(:,Sv.ixd),'Color', 'g', 'LineWidth',2)
+
 end
 set(gca,{'FontSize'},{18},{'xcolor'},{'k'})
 xlabel('Temps (s)','FontSize',20)
@@ -53,11 +45,6 @@ plot(Courbe1.t,Courbe1.X(:,Sv.ithetad),'Color', 'b', 'LineWidth',2)
 if nargin == 3
     hold on;
     plot(Courbe2.t,Courbe2.X(:,Sv.ithetad),'Color', 'r', 'LineWidth',2)
-elseif nargin == 4
-    hold on;
-    plot(Courbe2.t,Courbe2.X(:,Sv.ithetad),'Color', 'r', 'LineWidth',2)
-    hold on;
-    plot(Courbe3.t,Courbe3.X(:,Sv.ithetad),'Color', 'g', 'LineWidth',2)
 end
 set(gca,{'FontSize'},{18},{'xcolor'},{'k'})
 xlabel('Temps (s)','FontSize',20)
@@ -69,15 +56,6 @@ plot(Courbe1.t,Courbe1.U,'Color', 'b', 'LineWidth',2)
 if nargin == 3
     hold on;
     plot(Courbe2.t,Courbe2.U,'Color', 'r', 'LineWidth',2)
-    legend({Courbe1.Name, Courbe2.Name})
-elseif nargin == 4
-    hold on;
-    plot(Courbe2.t,Courbe2.U,'Color', 'r', 'LineWidth',2)
-    hold on;
-    plot(Courbe3.t,Courbe3.U,'Color', 'g', 'LineWidth',2)
-    legend({Courbe1.Name, Courbe2.Name, Courbe3.Name})
-else
-    legend({Courbe1.Name})
 end
 set(gca,{'FontSize'},{18},{'xcolor'},{'k'})
 xlabel('Temps (s)','FontSize',20)
