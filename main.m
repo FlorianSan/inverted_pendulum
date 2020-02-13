@@ -45,3 +45,5 @@ target = 1;
 [t,X] = ode45(@(t,X)two_loop(t,X,target,P,Sv),tspan,X0);
 U = -K*X';
 affichage(X,U,t,Sv);
+
+
