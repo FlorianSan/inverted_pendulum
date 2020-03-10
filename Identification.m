@@ -42,7 +42,7 @@ for i =2:N
 end
 rank(H);
 rank(H*H');
-theta = pinv(H)*Y;
+theta = pinv(H)*Y
 
 A_est = [theta(1) theta(2); theta(3) theta(4)];
 B_est = [theta(5); theta(6)];
