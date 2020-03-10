@@ -47,4 +47,6 @@ B_est = [theta(17);
 C = eye(4);
 D = zeros(4,1);
 sys_est = ss(A_est ,B_est, C, D, dt);
-step(sys_est);
+sysc = d2c(sys_est,'tustin');
+eig(sysc.A)
+step(sysc);
