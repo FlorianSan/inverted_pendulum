@@ -15,8 +15,8 @@ classdef Param
    end 
    methods 
           function this = Param()
-              this.b = this.Ib + this.mb * this.L^2;
-              this.c = this.Iw + (this.mw+this.mb) * this.R^2;
+              this.b = this.Ib + this.mb * this.L^2; % inertie du corp
+              this.c = this.Iw + (this.mw+this.mb) * this.R^2; %inertie de la roue
               this.bc = this.b * this.c;
               this.h = this.mb * this.R * this.L;
           end

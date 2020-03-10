@@ -6,17 +6,17 @@ clear all;
 P = Param;
 Sv = SV;
 U = 0;
-target = 0.1; %m
+target = 2; %m
 
 
 %Open Loop
-X0 = [0; 0.01; 0; 0];
+X0 = [0; 0; 0; 0];
 tspan = 0:.01:10;
-opts = odeset();
-[OpenLoop.t,OpenLoop.X] = ode45(@(t,X)dyn(t,X,U,P,Sv),tspan,X0);
+%opts = odeset();
+[OpenLoop.t,OpenLoop.X] = ode45(@(t,X)dyn2(t,X,U,P,Sv),tspan,X0);
 OpenLoop.U = zeros(length(tspan),1);
 OpenLoop.Name = "Open Loop";
-
+affichage(OpenLoop, tl);
 %feedback
 %[t,X] = ode45(@(t,X)feedback(t,X,K,P,Sv),tspan,X0);
 
@@ -31,7 +31,7 @@ poles = [-2 -3 -4 -5];
 K = place(A, B, poles);
 eig(A-B*K);
 [Pole.t,Pole.X] = ode45(@(t,X)feedback(t,X,K,target,P,Sv),tspan,X0);
-Pole.U = -K*Pole.X';
+Pole.U = -K*(Pole.X'-[target;0;0;0]);
 Pole.Name = "Placement de Poles";
 
 %lqr
@@ -40,7 +40,7 @@ R = diag(2);
 [K_lqr,S,E] = lqr(A,B,Q,R);
 eig(A-B*K_lqr);
 [LQR.t,LQR.X] = ode45(@(t,X)feedback(t,X,K_lqr,target,P,Sv),tspan,X0);
-LQR.U = -K*LQR.X';
+LQR.U = -K_lqr*(LQR.X'-[target;0;0;0]);
 LQR.Name = "LQR";
 
 %two loop
@@ -48,6 +48,7 @@ LQR.Name = "LQR";
 
 [tl.t,tl.X] = ode45(@(t,X)two_loop(t,X,target,P,Sv),tspan,X0);
 %problem avec U 
+tl.U = ctl(tl.X,target, Sv);
 tl.Name = "Two loop";
 
 
