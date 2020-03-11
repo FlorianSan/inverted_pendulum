@@ -1,7 +1,7 @@
 clear all;
 close all;
 clc;
-dt = 1/100e6; %100 mhz
+dt = 1/100; %100 hz
 M = readmatrix('planar_mip__controlled_training_traj.csv');
 x_k = M(:,1);
 theta_k = M(:,2);
