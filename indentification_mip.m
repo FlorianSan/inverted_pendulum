@@ -2,7 +2,10 @@ clear all;
 close all;
 clc;
 dt = 1/100; %100 hz
-M = readmatrix('planar_mip__controlled_training_traj.csv');
+%M = readmatrix('planar_mip__controlled_training_traj.csv');
+%M = readmatrix('planar_mip__uniform_training_traj.csv');
+M = readmatrix('rosmip_io_1_static.csv');
+%M = readmatrix('rosmip_io_1_step_lin.csv');
 x_k = M(:,1);
 theta_k = M(:,2);
 xd_k = M(:,3);
@@ -14,21 +17,23 @@ xd_k1 = M(:,8);
 thetad_k1 = M(:,9);
 
 N = length(x_k);
+t=linspace(1,100,N);
+plot(t,x_k)
 
-H = zeros(4*N-1,20);
-Y = zeros(4*N-1,1);
+H = zeros(4*N,20);
+Y = zeros(4*N,1);
 
-for i= 1:4:(N/4)
-    H(i,:) = [xd_k(i) theta_k(i) xd_k(i) thetad_k(i) 0 0 0 0 0 0 0 0 0 0 0 0 tau_k(i) 0 0 0];
-    H(i+1,:) = [0 0 0 0 xd_k(i) theta_k(i) xd_k(i) thetad_k(i) 0 0 0 0 0 0 0 0 0 tau_k(i) 0 0];
-    H(i+2,:) = [0 0 0 0 0 0 0 0 xd_k(i) theta_k(i) xd_k(i) thetad_k(i) 0 0 0 0 0 0 tau_k(i) 0];
-    H(i+3,:) = [ 0 0 0 0 0 0 0 0 0 0 0 0 xd_k(i) theta_k(i) xd_k(i) thetad_k(i) 0 0 0 tau_k(i)];
+for i= 1:N
+    H(4*i-3,:) = [x_k(i) theta_k(i) xd_k(i) thetad_k(i) 0 0 0 0 0 0 0 0 0 0 0 0 tau_k(i) 0 0 0];
+    H(4*i-2,:) = [0 0 0 0 x_k(i) theta_k(i) xd_k(i) thetad_k(i) 0 0 0 0 0 0 0 0 0 tau_k(i) 0 0];
+    H(4*i-1,:) = [0 0 0 0 0 0 0 0 x_k(i) theta_k(i) xd_k(i) thetad_k(i) 0 0 0 0 0 0 tau_k(i) 0];
+    H(4*i,:) = [ 0 0 0 0 0 0 0 0 0 0 0 0 x_k(i) theta_k(i) xd_k(i) thetad_k(i) 0 0 0 tau_k(i)];
 end 
-for i =1:4:(N/4)
-    Y(i) = x_k1(i);
-    Y(i+1) = theta_k1(i);
-    Y(i+2) = xd_k1(i);
-    Y(i+3) = thetad_k1(i);
+for i =1:N
+    Y(4*i-3) = x_k1(i);
+    Y(4*i-2) = theta_k1(i);
+    Y(4*i-1) = xd_k1(i);
+    Y(4*i) = thetad_k1(i);
 end
 
 theta = pinv(H)*Y;
@@ -48,5 +53,8 @@ C = eye(4);
 D = zeros(4,1);
 sys_est = ss(A_est ,B_est, C, D, dt);
 sysc = d2c(sys_est,'tustin');
-eig(sysc.A)
-step(sysc);
+sysc.A;
+eig(sysc.A);
+[u,t] = gensig('square',10,10,0.1); %generation du signal
+[y,t,x] = lsim(sysc, u, t);
+plot(t,y,t,u)

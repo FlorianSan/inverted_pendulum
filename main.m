@@ -54,3 +54,27 @@ tl.Name = "Two loop";
 
 
 affichage(Sv, LQR, Pole, tl);
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sysd = fct_identification('rosmip_io_1_step_lin.csv');
+sysd2 = fct_identification('rosmip_io_1_static.csv');
+sysc = d2c(sysd,'tustin');
+sysc2 = d2c(sysd2,'tustin');
+sysc.A
+sysc2.A
+eig(sysc.A)
+eig(sysc2.A)
+[u,t] = gensig('square',5,10); %generation du signal
+[y,t,x] = lsim(sysc2, u, t);
+subplot(5,1,1);
+plot(t,y(:,1));
+subplot(5,1,2);
+plot(t,y(:,2))
+subplot(5,1,3);
+plot(t,y(:,3))
+subplot(5,1,4);
+plot(t,y(:,4))
+subplot(5,1,5);
+plot(t,u)
